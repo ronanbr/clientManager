@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/template/layoutBase.xhtml">
+
+	<ui:define name="content">
+		<h:form id="dados">
+			<p:commandButton value="Novo Cliente" icon="pi pi-fw pi-file" onclick="PF('clienteDialog').show();"
+							 update="formDialog:detalhesCliente" actionListener="#{pessoaFisicaBean.resetCliente()}" style="margin-left:2%" />
+			<p:commandButton onclick="PF('buscaDialog').show();" update="formBusca:detalhesBusca" value="Buscar"
+							 actionListener="#{pessoaFisicaBean.resetCliente()}" icon="pi pi-fw pi-search" style="margin-left:2%" />
+			<p:commandButton value="Atualizar Lista" actionListener="#{pessoaFisicaBean.listarTodos()}" rendered="false"
+							 icon="pi pi-fw pi-refresh" style="margin-left:2%" update="clientes" />
+
+			<p:dataTable id="clientes" var="cliente" emptyMessage="Nenhum Cliente." rowKey="#{cliente.nome}" style="margin-bottom:2%; margin-top:2%; margin-left:2%; margin-right:2%"
+				value="#{pessoaFisicaBean.clientes}">
+				<f:facet name="header">
+					Clientes
+				</f:facet>
+				<p:column headerText="Nome">
+					<h:outputText value="#{cliente.nome}" />
+				</p:column>
+
+				<p:column headerText="Dt. Nascimento" >
+					<h:outputText value="#{cliente.dtNascimento}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="CPF">
+					<h:outputText value="#{cliente.cpf}" />
+				</p:column>
+
+				<p:column headerText="Telefone">
+					<h:outputText value="#{cliente.telefone}" />
+				</p:column>
+
+				<p:column headerText="E-mail">
+					<h:outputText value="#{cliente.email}" />
+				</p:column>
+
+				<p:column style="width:32px;text-align: center">
+					<p:commandButton update="formDialog:detalhesCliente" onclick="PF('clienteDialog').show();" icon="pi pi-fw pi-pencil" title="Editar"
+									 actionListener="#{pessoaFisicaBean.setBtExcluirRendered(true)}">
+						<f:setPropertyActionListener value="#{cliente}" target="#{pessoaFisicaBean.clienteSelecionado}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+		<!-- Dialog para alteração de detalhes de clientes -->
+		<h:form id="formDialog">
+			<p:dialog header="Detalhes de Cliente" widgetVar="clienteDialog" width="400px" height="400px"
+					  closeOnEscape="true" modal="true" showEffect="fade" hideEffect="fade" position="center">
+				<p:outputPanel id="detalhesCliente">
+						<p:panelGrid columns="2" styleClass="semBorda">
+
+							<p:outputLabel value="Nome:" for="nome" />
+							<p:inputText id="nome" value="#{pessoaFisicaBean.clienteSelecionado.nome}"/>
+
+							<p:outputLabel value="CPF:" for="cpf" />
+							<p:inputMask id="cpf" value="#{pessoaFisicaBean.clienteSelecionado.cpf}" mask="999.999.999-99"/>
+
+							<p:outputLabel value="Dt. Nascimento:" for="dtNascimento" />
+							<p:datePicker id="dtNascimento" mask="dd/MM/yyyy" value="#{pessoaFisicaBean.clienteSelecionado.dtNascimento}"/>
+
+							<p:outputLabel value="telefone:" for="telefone" />
+							<p:inputText id="telefone" value="#{pessoaFisicaBean.clienteSelecionado.telefone}"/>
+
+							<p:outputLabel value="E-mail:" for="email" />
+							<p:inputText id="email" value="#{pessoaFisicaBean.clienteSelecionado.email}"/>
+
+							<p:commandButton update=":dados" icon="pi pi-fw pi-save" value="Salvar" actionListener="#{pessoaFisicaBean.salvarOuAlterarPessoaFisica()}"
+											 onsuccess="PF('clienteDialog').hide()" />
+
+							<p:commandButton update=":dados" icon="pi pi-fw pi-trash" value="Excluir" rendered="#{pessoaFisicaBean.btExcluirRendered}"
+											 actionListener="#{pessoaFisicaBean.excluirPessoaFisica()}" onsuccess="PF('clienteDialog').hide()">
+								<p:confirm header="Excluir cliente" message="Você tem certeza?" />
+							</p:commandButton>
+
+						</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+
+		<h:form id="formBusca">
+			<p:dialog header="Dados para pesquisa" widgetVar="buscaDialog" width="400px" height="400px"
+					  closeOnEscape="true" modal="true" showEffect="fade" hideEffect="fade" position="center">
+				<p:outputPanel id="detalhesBusca">
+					<p:panelGrid columns="2" styleClass="semBorda">
+
+						<p:outputLabel value="Nome:" for="nomeBusca" />
+						<p:inputText id="nomeBusca" value="#{pessoaFisicaBean.clienteSelecionado.nome}"/>
+
+						<p:outputLabel value="CPF:" for="cpfBusca" />
+						<p:inputText id="cpfBusca" value="#{pessoaFisicaBean.clienteSelecionado.cpf}"/>
+
+						<p:outputLabel value="Dt. Nascimento:" for="dtNascimentoBusca" />
+						<p:datePicker id="dtNascimentoBusca" mask="dd/MM/yyyy" value="#{pessoaFisicaBean.clienteSelecionado.dtNascimento}"/>
+
+						<p:outputLabel value="telefone:" for="telefoneBusca" />
+						<p:inputText id="telefoneBusca" value="#{pessoaFisicaBean.clienteSelecionado.telefone}"/>
+
+						<p:outputLabel value="E-mail:" for="emailBusca" />
+						<p:inputText id="emailBusca" value="#{pessoaFisicaBean.clienteSelecionado.email}"/>
+
+						<p:commandButton id="btBuscarDialog" update=":dados" icon="pi pi-fw pi-search" value="Buscar"
+										 actionListener="#{pessoaFisicaBean.buscarPessoaFisica()}" onsuccess="PF('buscaDialog').hide()" />
+
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

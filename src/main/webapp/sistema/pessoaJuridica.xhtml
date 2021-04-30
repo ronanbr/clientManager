@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/template/layoutBase.xhtml">
+
+	<ui:define name="content">
+		<h:form id="dados">
+			<p:commandButton value="Novo Cliente" icon="pi pi-fw pi-file" onclick="PF('clienteDialog').show();"
+							 update="formDialog:detalhesCliente" actionListener="#{pessoaJuridicaBean.resetCliente()}" style="margin-left:2%" />
+			<p:commandButton onclick="PF('buscaDialog').show();" update="formBusca:detalhesBusca" value="Buscar"
+							 actionListener="#{pessoaJuridicaBean.resetCliente()}" icon="pi pi-fw pi-search" style="margin-left:2%" />
+			<p:commandButton value="Atualizar Lista" actionListener="#{pessoaJuridicaBean.listarTodos()}" rendered="false"
+							 icon="pi pi-fw pi-refresh" style="margin-left:2%" update="clientes" />
+
+			<p:dataTable id="clientes" var="cliente" emptyMessage="Nenhum Cliente." rowKey="#{cliente.nome}" style="margin-bottom:2%; margin-top:2%; margin-left:2%; margin-right:2%"
+				value="#{pessoaJuridicaBean.clientes}">
+				<f:facet name="header">
+					Clientes
+				</f:facet>
+				<p:column headerText="Nome Fantasia">
+					<h:outputText value="#{cliente.nomeFantasia}" />
+				</p:column>
+
+				<p:column headerText="Razão Social">
+					<h:outputText value="#{cliente.razaoSocial}" />
+				</p:column>
+
+				<p:column headerText="CNPJ">
+					<h:outputText value="#{cliente.cnpj}" />
+				</p:column>
+
+				<p:column headerText="Site">
+					<h:outputText value="#{cliente.site}" />
+				</p:column>
+
+				<p:column headerText="Telefones">
+					<h:outputText value="implementar" />
+				</p:column>
+
+				<p:column style="width:32px;text-align: center">
+					<p:commandButton update="formDialog:detalhesCliente" onclick="PF('clienteDialog').show();" icon="pi pi-fw pi-pencil" title="Editar"
+									 actionListener="#{pessoaJuridicaBean.setBtExcluirRendered(true)}">
+						<f:setPropertyActionListener value="#{cliente}" target="#{pessoaJuridicaBean.clienteSelecionado}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+		<!-- Dialog para alteração de detalhes de clientes -->
+		<h:form id="formDialog">
+			<p:dialog header="Detalhes de Cliente" widgetVar="clienteDialog" width="400px" height="400px"
+					  closeOnEscape="true" modal="true" showEffect="fade" hideEffect="fade" position="center">
+				<p:outputPanel id="detalhesCliente">
+						<p:panelGrid columns="2" styleClass="semBorda">
+
+							<p:outputLabel value="Nome Fantasia:" for="nome" />
+							<p:inputText id="nome" value="#{pessoaJuridicaBean.clienteSelecionado.nomeFantasia}"/>
+
+							<p:outputLabel value="Razão Social:" for="razaoSocial" />
+							<p:inputText id="razaoSocial" value="#{pessoaJuridicaBean.clienteSelecionado.razaoSocial}"/>
+
+							<p:outputLabel value="CNPJ:" for="cnpj" />
+							<p:inputMask id="cnpj" value="#{pessoaJuridicaBean.clienteSelecionado.cnpj}" mask="99.999.999/9999-99"/>
+
+							<p:outputLabel value="Site:" for="site" />
+							<p:inputText id="site" value="#{pessoaJuridicaBean.clienteSelecionado.site}"/>
+
+							<p:commandButton update=":dados" icon="pi pi-fw pi-save" value="Salvar" actionListener="#{pessoaJuridicaBean.salvarOuAlterarPessoaJuridica()}"
+											 onsuccess="PF('clienteDialog').hide()" />
+
+							<p:commandButton update=":dados" icon="pi pi-fw pi-trash" value="Excluir" rendered="#{pessoaJuridicaBean.btExcluirRendered}"
+											 actionListener="#{pessoaJuridicaBean.excluirPessoaJuridica()}" onsuccess="PF('clienteDialog').hide()">
+								<p:confirm header="Excluir cliente" message="Você tem certeza?" />
+							</p:commandButton>
+
+						</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+
+		<h:form id="formBusca">
+			<p:dialog header="Dados para pesquisa" widgetVar="buscaDialog" width="400px" height="400px"
+					  closeOnEscape="true" modal="true" showEffect="fade" hideEffect="fade" position="center">
+				<p:outputPanel id="detalhesBusca">
+					<p:panelGrid columns="2" styleClass="semBorda">
+
+						<p:outputLabel value="Nome Fantasia:" for="nomeBusca" />
+						<p:inputText id="nomeBusca" value="#{pessoaJuridicaBean.clienteSelecionado.nomeFantasia}"/>
+
+						<p:outputLabel value="Razão Social:" for="razaoSocialBusca" />
+						<p:inputText id="razaoSocialBusca" value="#{pessoaJuridicaBean.clienteSelecionado.razaoSocial}"/>
+
+						<p:outputLabel value="CNPJ:" for="cnpjBusca" />
+						<p:inputText id="cnpjBusca" value="#{pessoaJuridicaBean.clienteSelecionado.cnpj}"/>
+
+						<p:outputLabel value="Site:" for="siteBusca" />
+						<p:inputText id="siteBusca" value="#{pessoaJuridicaBean.clienteSelecionado.site}"/>
+
+						<p:commandButton id="btBuscarDialog" update=":dados" icon="pi pi-fw pi-search" value="Buscar"
+										 actionListener="#{pessoaJuridicaBean.buscarPessoaJuridica()}" onsuccess="PF('buscaDialog').hide()" />
+
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>
