@@ -1,21 +1,16 @@
 package br.com.gerenciadorDeClientes.dao;
 
 import br.com.gerenciadorDeClientes.entity.PessoaEntity;
-import br.com.gerenciadorDeClientes.entity.PessoaFisicaEntity;
 import br.com.gerenciadorDeClientes.exception.DaoException;
 import br.com.gerenciadorDeClientes.util.JPAUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-/**
- * Dao com metodos genericos para CRUD.
- */
 public abstract class CrudDao<E extends PessoaEntity<ID>, ID extends Serializable> {
 
    private EntityManager em = new JPAUtil().getEntityManager();
@@ -84,7 +79,6 @@ public abstract class CrudDao<E extends PessoaEntity<ID>, ID extends Serializabl
         } catch (NoResultException e) {
             return null;
         }
-
     }
 
     @SuppressWarnings("unchecked")

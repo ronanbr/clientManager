@@ -11,6 +11,11 @@
 * WildFly 23.0.2
 * PostgreSQL Database
 
+### Pendencies ###
+
+* Move some methods to CRUD
+* Implement list of phones to Juridic Person
+
 ### Developer ###
 
 * Ronan Cardoso - ronan.uni@gmail.com

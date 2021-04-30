@@ -2,7 +2,6 @@ package br.com.gerenciadorDeClientes.service;
 
 import br.com.gerenciadorDeClientes.dao.CrudDao;
 import br.com.gerenciadorDeClientes.dao.PessoaFisicaDao;
-import br.com.gerenciadorDeClientes.dto.PessoaDto;
 import br.com.gerenciadorDeClientes.dto.PessoaFisicaDto;
 import br.com.gerenciadorDeClientes.entity.PessoaEntity;
 import br.com.gerenciadorDeClientes.entity.PessoaFisicaEntity;

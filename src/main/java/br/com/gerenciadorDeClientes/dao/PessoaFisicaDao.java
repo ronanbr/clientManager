@@ -31,6 +31,7 @@ public class PessoaFisicaDao extends CrudDao<PessoaFisicaEntity, Long> implement
         StringBuilder jpql = new StringBuilder();
         jpql.append("SELECT p FROM PessoaFisicaEntity p ");
         jpql.append("WHERE p.tipo = '" + PessoaEntity.TIPO_PESSOA_FISICA + "' ");
+
         if(!pessoaFisica.getNome().isEmpty()){
             jpql.append("AND UPPER(p.nome) LIKE UPPER('%" + pessoaFisica.getNome() + "%')");
         }
@@ -49,5 +50,4 @@ public class PessoaFisicaDao extends CrudDao<PessoaFisicaEntity, Long> implement
 
         return em.createQuery(jpql.toString()).getResultList();
     }
-
 }

@@ -31,6 +31,7 @@ public class PessoaJuridicaDao extends CrudDao<PessoaJuridicaEntity, Long> imple
         StringBuilder jpql = new StringBuilder();
         jpql.append("SELECT p FROM PessoaJuridicaEntity p ");
         jpql.append("WHERE p.tipo = '" + PessoaEntity.TIPO_PESSOA_JURIDICA + "' ");
+
         if(!pessoaJuridica.getNomeFantasia().isEmpty()){
             jpql.append("AND UPPER(p.nomeFantasia) LIKE UPPER('%" + pessoaJuridica.getNomeFantasia() + "%')");
         }
@@ -43,6 +44,7 @@ public class PessoaJuridicaDao extends CrudDao<PessoaJuridicaEntity, Long> imple
         if(!pessoaJuridica.getSite().isEmpty()){
             jpql.append("AND p.site LIKE '%" + pessoaJuridica.getSite() + "%'");
         }
+
         return em.createQuery(jpql.toString()).getResultList();
     }
 

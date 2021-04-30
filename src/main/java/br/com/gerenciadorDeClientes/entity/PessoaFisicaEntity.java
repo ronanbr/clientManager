@@ -2,14 +2,8 @@ package br.com.gerenciadorDeClientes.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import java.util.Date;
-
-@NamedQueries({
-    @NamedQuery(name = "PessoaFisicaEntity.listarTodosOsClientesPessoaFisica", query = "SELECT pf FROM PessoaFisicaEntity pf WHERE pf.tipo <> 'F'")
-})
 
 @Entity
 @Table(name = "pessoa")

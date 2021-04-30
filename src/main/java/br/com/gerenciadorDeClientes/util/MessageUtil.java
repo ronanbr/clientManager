@@ -1,7 +1,5 @@
 package br.com.gerenciadorDeClientes.util;
 
-import org.codehaus.plexus.util.StringUtils;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 

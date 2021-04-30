@@ -7,7 +7,6 @@
 	  xmlns:f="http://xmlns.jcp.org/jsf/core"
 	  xmlns:p="http://primefaces.org/ui">
 
-
 <ui:composition template="/template/layoutBase.xhtml">
 
 	<ui:define name="content">
@@ -53,7 +52,7 @@
 			</p:dataTable>
 		</h:form>
 
-		<!-- Dialog para alteração de detalhes de clientes -->
+		<!-- Dialog para inserção/alteração de detalhes de clientes -->
 		<h:form id="formDialog">
 			<p:dialog header="Detalhes de Cliente" widgetVar="clienteDialog" width="400px" height="400px"
 					  closeOnEscape="true" modal="true" showEffect="fade" hideEffect="fade" position="center">
@@ -85,6 +84,7 @@
 			</p:dialog>
 		</h:form>
 
+		<!-- Dialog para busca de clientes -->
 		<h:form id="formBusca">
 			<p:dialog header="Dados para pesquisa" widgetVar="buscaDialog" width="400px" height="400px"
 					  closeOnEscape="true" modal="true" showEffect="fade" hideEffect="fade" position="center">

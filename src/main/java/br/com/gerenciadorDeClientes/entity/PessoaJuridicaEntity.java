@@ -6,10 +6,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-@NamedQueries({
-    @NamedQuery(name = "PessoaJuridicaEntity.listarTodosOsClientesPessoaJuridica", query = "SELECT pj FROM PessoaJuridicaEntity pj WHERE pj.tipo = 'J'")
-})
-
 @Entity
 @Table(name = "pessoa")
 public class PessoaJuridicaEntity extends PessoaEntity<Long> {
@@ -26,7 +22,7 @@ public class PessoaJuridicaEntity extends PessoaEntity<Long> {
     @Column(name = "site")
     private String site;
 
-    //TODO Telefones
+    //TODO Lista de Telefones
 
     public String getRazaoSocial() {
         return razaoSocial;

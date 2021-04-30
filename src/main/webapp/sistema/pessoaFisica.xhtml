@@ -7,7 +7,6 @@
 	  xmlns:f="http://xmlns.jcp.org/jsf/core"
 	  xmlns:p="http://primefaces.org/ui">
 
-
 <ui:composition template="/template/layoutBase.xhtml">
 
 	<ui:define name="content">
@@ -55,7 +54,7 @@
 			</p:dataTable>
 		</h:form>
 
-		<!-- Dialog para alteração de detalhes de clientes -->
+		<!-- Dialog para inserção/alteração de detalhes de clientes -->
 		<h:form id="formDialog">
 			<p:dialog header="Detalhes de Cliente" widgetVar="clienteDialog" width="400px" height="400px"
 					  closeOnEscape="true" modal="true" showEffect="fade" hideEffect="fade" position="center">
@@ -90,6 +89,7 @@
 			</p:dialog>
 		</h:form>
 
+		<!-- Dialog para busca de clientes -->
 		<h:form id="formBusca">
 			<p:dialog header="Dados para pesquisa" widgetVar="buscaDialog" width="400px" height="400px"
 					  closeOnEscape="true" modal="true" showEffect="fade" hideEffect="fade" position="center">
@@ -105,7 +105,7 @@
 						<p:outputLabel value="Dt. Nascimento:" for="dtNascimentoBusca" />
 						<p:datePicker id="dtNascimentoBusca" mask="dd/MM/yyyy" value="#{pessoaFisicaBean.clienteSelecionado.dtNascimento}"/>
 
-						<p:outputLabel value="telefone:" for="telefoneBusca" />
+						<p:outputLabel value="Telefone:" for="telefoneBusca" />
 						<p:inputText id="telefoneBusca" value="#{pessoaFisicaBean.clienteSelecionado.telefone}"/>
 
 						<p:outputLabel value="E-mail:" for="emailBusca" />
